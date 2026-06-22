@@ -1,0 +1,10 @@
+services:
+  linuxserver:
+    image: lscr.io/linuxserver/code-server:latest
+    restart: unless-stopped
+    ports:
+      - "3020:8443"
+    volumes:
+      - ./.docker/config:/config
+    environment:
+      TZ: Europe/Prague
