@@ -3,8 +3,8 @@ services:
     image: codercom/code-server:latest
     restart: unless-stopped
     ports:
-      - "3010:8080"
+      - "3010:8443"
     volumes:
       - ./.docker/config:/home/coder/.config
       - ./.docker/workspace:/home/coder/project
-    command: --auth none
+    command: --auth none --bind-addr 0.0.0.0:8443
