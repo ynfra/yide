@@ -6,5 +6,6 @@ services:
       - "3020:8443"
     volumes:
       - ./.docker/config:/config
+      - ./.docker/workspace:/config/workspace
     environment:
       TZ: Europe/Prague

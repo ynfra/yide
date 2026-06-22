@@ -10,7 +10,7 @@ each on its own port. Use `yide.sh` to start a specific variant.
 | `codercom`   | `codercom/code-server:latest`                 | 3010 | none (`--auth none`)  |
 | `linuxserver`| `lscr.io/linuxserver/code-server:latest`      | 3020 | none (no PASSWORD set)|
 | `openvscode` | `lscr.io/linuxserver/openvscode-server:latest`| 3030 | none (no token set)   |
-| `theia`      | `theiaide/theia:latest`                       | 3040 | none                  |
+| `theia`      | `ghcr.io/eclipse-theia/theia-ide/theia-ide:latest` | 3040 | none             |
 
 ## Layout
 

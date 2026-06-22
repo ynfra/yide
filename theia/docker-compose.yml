@@ -1,6 +1,6 @@
 services:
   theia:
-    image: theiaide/theia:latest
+    image: ghcr.io/eclipse-theia/theia-ide/theia-ide:latest
     restart: unless-stopped
     ports:
       - "3040:3000"
