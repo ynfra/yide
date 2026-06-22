@@ -1,0 +1,9 @@
+services:
+  theia:
+    image: theiaide/theia:latest
+    restart: unless-stopped
+    ports:
+      - "3040:3000"
+    volumes:
+      - ./.docker/workspace:/home/project
+    user: root

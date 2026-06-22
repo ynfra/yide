@@ -1,0 +1,10 @@
+services:
+  openvscode:
+    image: lscr.io/linuxserver/openvscode-server:latest
+    restart: unless-stopped
+    ports:
+      - "3030:3000"
+    volumes:
+      - ./.docker/config:/config
+    environment:
+      TZ: Europe/Prague

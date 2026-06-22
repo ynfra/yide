@@ -1,0 +1,10 @@
+services:
+  codercom:
+    image: codercom/code-server:latest
+    restart: unless-stopped
+    ports:
+      - "3010:8080"
+    volumes:
+      - ./.docker/config:/home/coder/.config
+      - ./.docker/workspace:/home/coder/project
+    command: --auth none

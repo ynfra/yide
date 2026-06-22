@@ -7,15 +7,29 @@ each on its own port. Use `yide.sh` to start a specific variant.
 
 | Variant      | Image                                        | Port | Auth                          |
 |--------------|----------------------------------------------|------|-------------------------------|
-| `codercom`   | `codercom/code-server:latest`                | 3010 | password (`coder`)            |
-| `linuxserver`| `lscr.io/linuxserver/code-server:latest`     | 3020 | password (`coder`)            |
-| `openvscode` | `lscr.io/linuxserver/openvscode-server:latest`| 3030 | token in URL (`?tkn=coder`)  |
-| `theia`      | `theiaide/theia:latest`                      | 3040 | none                          |
+| `codercom`   | `codercom/code-server:latest`                 | 3010 | none (`--auth none`)  |
+| `linuxserver`| `lscr.io/linuxserver/code-server:latest`      | 3020 | none (no PASSWORD set)|
+| `openvscode` | `lscr.io/linuxserver/openvscode-server:latest`| 3030 | none (no token set)   |
+| `theia`      | `theiaide/theia:latest`                       | 3040 | none                  |
+
+## Layout
+
+```
+yide/
+  codercom/   docker-compose.yml  .gitignore
+  linuxserver/ docker-compose.yml  .gitignore
+  openvscode/  docker-compose.yml  .gitignore
+  theia/       docker-compose.yml  .gitignore
+  yide.sh      chooser script
+  Makefile
+```
+
+Each variant is an isolated stack — its own `docker-compose.yml` and `.docker/` data dir.
 
 ## Usage
 
 ```bash
-# Start a specific variant (detached)
+# Start a variant (detached)
 ./yide.sh codercom
 ./yide.sh openvscode
 
@@ -23,24 +37,21 @@ each on its own port. Use `yide.sh` to start a specific variant.
 ./yide.sh codercom down
 ./yide.sh theia logs
 
-# Start all variants at once
-docker compose up -d
-# or
-make docker-up
+# Or run directly inside a variant dir
+cd codercom && docker compose up -d
 ```
 
 ## Data persistence
 
-Runtime state is written to `.docker/<variant>/` (gitignored). To reset a variant:
+Runtime state is written to `<variant>/.docker/` (gitignored). To reset a variant:
 
 ```bash
-docker compose stop codercom && docker compose rm -f codercom
-rm -rf .docker/codercom/
+cd codercom && docker compose down && rm -rf .docker/
 ```
 
 ## Rules for Agents
 
-1. All four variants are independent — do not add cross-service dependencies.
-2. Never commit `.docker/` or `.env` — they are gitignored.
+1. Each variant is fully isolated — no shared networks or volumes between them.
+2. Never commit `.docker/` or `.env` — gitignored per variant.
 3. Port assignments are fixed: 3010 / 3020 / 3030 / 3040. Do not change them.
-4. Passwords and tokens in `docker-compose.yml` are sandbox defaults — not for production.
+4. No auth is set by default — add a reverse proxy with auth for any public exposure.
