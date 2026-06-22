@@ -7,7 +7,7 @@ each on its own port. Use `yide.sh` to start a specific variant.
 
 | Variant      | Image                                        | Port | Auth                          |
 |--------------|----------------------------------------------|------|-------------------------------|
-| `codercom`   | `codercom/code-server:latest`                 | 3010 | none (`--auth none`)  |
+| `codercom`   | `codercom/code-server:latest`                 | 3010 | none (`--auth none`); binds on 8443 inside container so `/proxy/8080/` reaches workspace services |
 | `linuxserver`| `lscr.io/linuxserver/code-server:latest`      | 3020 | none (no PASSWORD set)|
 | `openvscode` | `lscr.io/linuxserver/openvscode-server:latest`| 3030 | none (no token set)   |
 | `theia`      | `ghcr.io/eclipse-theia/theia-ide/theia-ide:latest` | 3040 | none             |
