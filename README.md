@@ -1,43 +1,35 @@
-# yide — in-browser IDE variants
+# ynfra / yide
 
-Four self-hosted web IDEs, each an isolated Docker Compose stack on its
+Four self-hosted in-browser IDEs, each an isolated Docker Compose stack on its
 own fixed port. Pick one, start it, open it in the browser.
 
-| Variant       | Image                                              | URL                    |
-|---------------|----------------------------------------------------|------------------------|
-| `codercom`    | `codercom/code-server`                             | http://localhost:3010  |
-| `linuxserver` | `lscr.io/linuxserver/code-server`                  | http://localhost:3020  |
-| `openvscode`  | `lscr.io/linuxserver/openvscode-server`            | http://localhost:3030  |
-| `theia`       | `ghcr.io/eclipse-theia/theia-ide/theia-ide`        | http://localhost:3040  |
-
-## Quick start
+## Usage
 
 ```bash
 ./yide.sh codercom          # start (detached), prints the URL
 ./yide.sh codercom logs     # tail logs
 ./yide.sh codercom down     # stop
+
+cd openvscode && docker compose up -d    # or run a variant directly
 ```
 
-Or run a variant directly:
+## Variants
 
-```bash
-cd openvscode && docker compose up -d
-```
+| Variant | URL | Image |
+|---|---|---|
+| `codercom` | http://localhost:3010 | `codercom/code-server` |
+| `linuxserver` | http://localhost:3020 | `lscr.io/linuxserver/code-server` |
+| `openvscode` | http://localhost:3030 | `lscr.io/linuxserver/openvscode-server` |
+| `theia` | http://localhost:3040 | `ghcr.io/eclipse-theia/theia-ide/theia-ide` |
 
-## Data persistence
+## Notes
 
-Each variant writes its runtime state (settings, extensions, workspace)
-to its own gitignored `<variant>/.docker/` directory. Reset a variant
-with:
+- All variants run **without authentication** — meant for local use; put a
+  reverse proxy with auth in front before exposing any of them beyond
+  localhost.
+- Runtime state (settings, extensions, workspace) lives in each variant's
+  gitignored `.docker/` dir — reset with
+  `cd <variant> && docker compose down && rm -rf .docker/`.
 
-```bash
-cd codercom && docker compose down && rm -rf .docker/
-```
-
-## Security
-
-All variants run **without authentication** — they are meant for local
-use. Put a reverse proxy with auth in front before exposing any of them
-beyond localhost.
-
-See `AGENTS.md` for the full variant reference and contributor rules.
+See [AGENTS.md](AGENTS.md) for the full variant reference and contributor
+rules.
